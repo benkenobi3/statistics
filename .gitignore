@@ -9,4 +9,4 @@ local_settings.py
 /.idea
 /.vscode
 
-/components/static
+/components/static/
