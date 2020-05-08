@@ -49,7 +49,7 @@ class UserListAPIView(generics.ListAPIView):
     serializer_class = UserSerializer
 
     permission_classes = (
-        permissions.IsAuthenticated
+        permissions.IsAuthenticated,
     )
 
 
