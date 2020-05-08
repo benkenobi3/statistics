@@ -18,17 +18,24 @@ def authenticate_user(request):
         username = request.data['username']
         password = request.data['password']
 
-        user = User.objects.get(username=username, password=password)
+        user = User.objects.get(username=username)
         if user:
-            payload = jwt_payload_handler(user)
-            token = jwt_encode_handler(payload)
-            res = {
-                'token': token
-            }
-            return Response(res, status=status.HTTP_200_OK)
+
+            if user.check_password(password):
+                payload = jwt_payload_handler(user)
+                token = jwt_encode_handler(payload)
+                res = {
+                    'token': token
+                }
+                return Response(res, status=status.HTTP_200_OK)
+            else:
+                res = {
+                    'error': 'can not authenticate with the given credentials or the account has been deactivated'
+                }
+                return Response(res, status=status.HTTP_403_FORBIDDEN)
         else:
             res = {
-                'error': 'can not authenticate with the given credentials or the account has been deactivated'
+                'error': 'con not find user with specified username'
             }
             return Response(res, status=status.HTTP_403_FORBIDDEN)
 
