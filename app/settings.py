@@ -85,7 +85,7 @@ TEMPLATES = [
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
@@ -142,6 +142,9 @@ AUTH_PASSWORD_VALIDATORS = [
 import datetime
 
 JWT_AUTH = {
+    'JWT_VERIFY': True,
+    'JWT_VERIFY_EXPIRATION': True,
+    'JWT_PAYLOAD_HANDLER': 'authentication.jwt.jwt_payload_handler',
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=14)
 }
 
