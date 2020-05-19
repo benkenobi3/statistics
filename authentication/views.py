@@ -14,11 +14,14 @@ jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 
 @api_view(['POST'])
 def authenticate_user(request):
-    try:
-        username = request.data['username']
-        password = request.data['password']
+
+    username = request.data.get('username')
+    password = request.data.get('password')
+
+    if username & password:
 
         user = User.objects.get(username=username)
+
         if user:
 
             if user.check_password(password):
@@ -38,9 +41,10 @@ def authenticate_user(request):
                 'error': 'con not find user with specified username'
             }
             return Response(res, status=status.HTTP_403_FORBIDDEN)
-
-    except KeyError:
-        res = {'error': 'please provide a username and a password'}
+    else:
+        res = {
+            'error': 'please provide a username and a password'
+        }
         return Response(res, status=status.HTTP_400_BAD_REQUEST)
 
 
