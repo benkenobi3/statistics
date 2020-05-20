@@ -24,7 +24,7 @@ class Expense(models.Model):
     user = models.ForeignKey(User, related_name='expenses', on_delete=models.CASCADE)
 
     category = models.ForeignKey(Category, related_name='expenses', on_delete=models.CASCADE)
-    cash_check = models.ForeignKey(Check, related_name='positions', on_delete=models.CASCADE, null=True)
+    cash_check = models.ForeignKey(Check, related_name='positions', on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return self.name

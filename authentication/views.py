@@ -18,7 +18,7 @@ def authenticate_user(request):
     username = request.data.get('username')
     password = request.data.get('password')
 
-    if username & password:
+    if bool(username) & bool(password):
 
         user = User.objects.get(username=username)
 
