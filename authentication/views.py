@@ -1,11 +1,11 @@
 from django.contrib.auth.models import User
-from rest_framework import generics, permissions, status
+from rest_framework import generics, status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from rest_framework_jwt.settings import api_settings
 
-from .serializers import UserSerializer, UserCreateSerializer
+from .serializers import UserCreateSerializer
 
 
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
@@ -46,15 +46,6 @@ def authenticate_user(request):
             'error': 'please provide a username and a password'
         }
         return Response(res, status=status.HTTP_400_BAD_REQUEST)
-
-
-class UserListAPIView(generics.ListAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-    permission_classes = (
-        permissions.IsAuthenticated,
-    )
 
 
 class UserCreateAPIView(generics.CreateAPIView):
