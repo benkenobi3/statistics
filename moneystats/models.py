@@ -6,6 +6,9 @@ class Category(models.Model):
 
     name = models.CharField(max_length=200)
 
+    def __str__(self):
+        return self.name
+
 
 class Check(models.Model):
 
@@ -22,3 +25,6 @@ class Expense(models.Model):
 
     category = models.ForeignKey(Category, related_name='expenses', on_delete=models.CASCADE)
     cash_check = models.ForeignKey(Check, related_name='positions', on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return self.name
