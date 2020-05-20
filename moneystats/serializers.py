@@ -6,27 +6,21 @@ class CheckSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Check
-        fields = ['date']
+        fields = '__all__'
 
 
 class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields = ['name']
+        fields = '__all__'
 
 
 class ExpenseSerializer(serializers.ModelSerializer):
+
+    category = CategorySerializer(read_only=True)
 
     class Meta:
         model = Expense
         fields = '__all__'
 
-
-class DiagramCategorySerializer(serializers.ModelSerializer):
-
-    expenses = ExpenseSerializer(many=True, read_only=True)
-
-    class Meta:
-        model = Category
-        fields = ['name', 'expenses']
