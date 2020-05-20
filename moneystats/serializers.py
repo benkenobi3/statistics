@@ -22,3 +22,11 @@ class ExpenseSerializer(serializers.ModelSerializer):
         model = Expense
         fields = '__all__'
 
+
+class DiagramCategorySerializer(serializers.ModelSerializer):
+
+    expenses = ExpenseSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Category
+        fields = ['name', 'expenses']
