@@ -15,8 +15,8 @@ jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 @api_view(['POST'])
 def authenticate_user(request):
 
-    username = request.query_params.get('username')
-    password = request.query_params.get('password')
+    username = request.data.get('username')
+    password = request.data.get('password')
 
     if bool(username) & bool(password):
 
