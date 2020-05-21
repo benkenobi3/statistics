@@ -18,8 +18,8 @@ class Check(models.Model):
 class Expense(models.Model):
 
     name = models.CharField(max_length=200)
-    price = models.FloatField(default=0)
-    date = models.DateTimeField()
+    price = models.FloatField()
+    date = models.DateTimeField(auto_now_add=True)
 
     user = models.ForeignKey(User, related_name='expenses', on_delete=models.CASCADE)
 

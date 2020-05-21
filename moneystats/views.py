@@ -8,7 +8,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework import generics
 
 from .models import Category, Expense
-from .serializers import CategorySerializer, ExpenseSerializer
+from .serializers import CategorySerializer, ExpenseSerializer, ExpenseCreateSerializer
 
 
 @api_view(['GET'])
@@ -27,7 +27,7 @@ def diagram_data(request: Request) -> Response:
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def category_expenses(request: Request, category_id, date_from, date_to) -> Response:
+def category_expenses(request: Request, category_id) -> Response:
 
     # date_from, date_to = int(request.query_params['date_from']), int(request.query_params['date_to'])
     # date_range = (datetime.fromtimestamp(int(date_from)), datetime.fromtimestamp(int(date_to)))
@@ -52,6 +52,17 @@ class CategoryListAPIView(generics.ListAPIView):
     serializer_class = CategorySerializer
 
 
+class ExpenseCreateAPIView(generics.CreateAPIView):
+
+    permission_classes = [IsAuthenticated]
+
+    model = Expense
+    serializer_class = ExpenseCreateSerializer
+
+
 class ExpenseListAPIView(generics.ListAPIView):
 
+    permission_classes = [IsAuthenticated, IsAdminUser]
+
     queryset = Expense.objects.all()
+    serializer_class = ExpenseSerializer
