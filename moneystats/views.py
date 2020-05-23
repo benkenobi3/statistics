@@ -32,7 +32,17 @@ def category_expenses(request: Request, category_id) -> Response:
     # date_from, date_to = int(request.query_params['date_from']), int(request.query_params['date_to'])
     # date_range = (datetime.fromtimestamp(int(date_from)), datetime.fromtimestamp(int(date_to)))
 
-    expenses = Expense.objects.all().filter(category_id=int(category_id), user=request.user)
+    expenses = Expense.objects.filter(category_id=int(category_id), user=request.user)
+    serialized_queryset = ExpenseSerializer(expenses, many=True)
+
+    return Response(serialized_queryset.data)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def user_expenses(request: Request) -> Response:
+
+    expenses = Expense.objects.filter(user=request.user).order_by('date')
     serialized_queryset = ExpenseSerializer(expenses, many=True)
 
     return Response(serialized_queryset.data)
