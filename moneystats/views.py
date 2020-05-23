@@ -42,7 +42,7 @@ def category_expenses(request: Request, category_id) -> Response:
 @permission_classes([IsAuthenticated])
 def user_expenses(request: Request) -> Response:
 
-    expenses = Expense.objects.filter(user=request.user).order_by('date')
+    expenses = Expense.objects.filter(user=request.user).order_by('-date')
     serialized_queryset = ExpenseSerializer(expenses, many=True)
 
     return Response(serialized_queryset.data)
