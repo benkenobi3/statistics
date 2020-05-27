@@ -16,6 +16,13 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class CategoryNameSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Category
+        fields = ['name']
+
+
 class ExpenseSerializer(serializers.ModelSerializer):
 
     category = CategorySerializer(read_only=True)
@@ -26,6 +33,8 @@ class ExpenseSerializer(serializers.ModelSerializer):
 
 
 class ExpenseListSerializer(serializers.ModelSerializer):
+
+    category = CategoryNameSerializer(read_only=True)
 
     class Meta:
         model = Expense
