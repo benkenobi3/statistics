@@ -26,8 +26,7 @@ class ExpenseSerializer(serializers.ModelSerializer):
 
 
 class ExpenseCreateSerializer(serializers.ModelSerializer):
-      
+
     class Meta:
         model = Expense
         fields = '__all__'
-

@@ -7,6 +7,7 @@ urlpatterns = [
     url(r'expenses/all', ExpenseListAPIView.as_view()),
     url(r'expenses/list', ExpensesUserListAPIVIew.as_view()),
     url(r'expenses/create', ExpenseCreateAPIView.as_view()),
+    url(r'expenses/detail/(?P<pk>.+)', ExpenseDetailAPIView.as_view()),
     url(r'categories/list', CategoryListAPIView.as_view()),
     url(r'categories/create/', CategoryCreateAPIView.as_view()),
     url(r'categories/(?P<category_id>.+)/expenses/', category_expenses)

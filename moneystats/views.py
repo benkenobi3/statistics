@@ -53,6 +53,12 @@ class CategoryListAPIView(generics.ListAPIView):
     serializer_class = CategorySerializer
 
 
+class ExpenseDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+
+    model = Expense
+    serializer_class = ExpenseSerializer
+
+
 class ExpenseCreateAPIView(generics.CreateAPIView):
 
     permission_classes = [IsAuthenticated]
