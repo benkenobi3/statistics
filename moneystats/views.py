@@ -9,7 +9,7 @@ from rest_framework import generics, viewsets
 
 from .models import Category, Expense
 from .paginations import ExpensesAllPagination, ExpensesUserPagination
-from .serializers import CategorySerializer, ExpenseSerializer, ExpenseCreateSerializer
+from .serializers import CategorySerializer, ExpenseSerializer, ExpenseListSerializer, ExpenseClearSerializer
 
 
 @api_view(['GET'])
@@ -60,7 +60,7 @@ class ExpenseDetailAPIView(viewsets.ModelViewSet, generics.RetrieveUpdateDestroy
 class ExpenseCreateAPIView(generics.CreateAPIView):
 
     permission_classes = [IsAuthenticated]
-    serializer_class = ExpenseCreateSerializer
+    serializer_class = ExpenseClearSerializer
 
 
 class ExpenseListAPIView(generics.ListAPIView):
@@ -80,7 +80,7 @@ class ExpensesUserListAPIVIew(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
 
     model = Expense
-    serializer_class = ExpenseSerializer
+    serializer_class = ExpenseListSerializer
     pagination_class = ExpensesUserPagination
 
     def get_queryset(self):
