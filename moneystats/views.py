@@ -42,8 +42,6 @@ def category_expenses(request: Request, category_id) -> Response:
 class CategoryCreateAPIView(generics.CreateAPIView):
 
     permission_classes = [IsAuthenticated, IsAdminUser]
-
-    model = Category
     serializer_class = CategorySerializer
 
 
@@ -55,15 +53,13 @@ class CategoryListAPIView(generics.ListAPIView):
 
 class ExpenseDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 
-    model = Expense
+    queryset = Expense.objects.all()
     serializer_class = ExpenseSerializer
 
 
 class ExpenseCreateAPIView(generics.CreateAPIView):
 
     permission_classes = [IsAuthenticated]
-
-    model = Expense
     serializer_class = ExpenseCreateSerializer
 
 
