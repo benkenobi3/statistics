@@ -58,10 +58,6 @@ class ExpenseDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     model = Expense
     serializer_class = ExpenseSerializer
 
-    def get_queryset(self):
-        queryset = Expense.objects.filter(id=self.request.pk)
-        return queryset
-
 
 class ExpenseCreateAPIView(generics.CreateAPIView):
 
