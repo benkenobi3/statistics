@@ -5,7 +5,7 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework import generics
+from rest_framework import generics, viewsets
 
 from .models import Category, Expense
 from .paginations import ExpensesAllPagination, ExpensesUserPagination
@@ -51,7 +51,7 @@ class CategoryListAPIView(generics.ListAPIView):
     serializer_class = CategorySerializer
 
 
-class ExpenseDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+class ExpenseDetailAPIView(viewsets.ModelViewSet, generics.RetrieveUpdateDestroyAPIView):
 
     queryset = Expense.objects.all()
     serializer_class = ExpenseSerializer
