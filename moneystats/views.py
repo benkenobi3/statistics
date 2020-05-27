@@ -58,6 +58,10 @@ class ExpenseDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     model = Expense
     serializer_class = ExpenseSerializer
 
+    def get_queryset(self):
+        queryset = Expense.objects.filter(id=self.request.pk)
+        return queryset
+
 
 class ExpenseCreateAPIView(generics.CreateAPIView):
 
@@ -77,7 +81,10 @@ class ExpenseListAPIView(generics.ListAPIView):
 
 
 class ExpensesUserListAPIVIew(generics.ListAPIView):
-
+    """
+    This view should return a list of all the purchases
+    for the currently authenticated user.
+    """
     permission_classes = [IsAuthenticated]
 
     model = Expense
@@ -85,9 +92,5 @@ class ExpensesUserListAPIVIew(generics.ListAPIView):
     pagination_class = ExpensesUserPagination
 
     def get_queryset(self):
-        """
-        This view should return a list of all the purchases
-        for the currently authenticated user.
-        """
         user = self.request.user
         return Expense.objects.filter(user=user).order_by('-date')
