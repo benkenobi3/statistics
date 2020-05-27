@@ -8,6 +8,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework import generics
 
 from .models import Category, Expense
+from .paginations import ExpensesAllPagination, ExpensesUserPagination
 from .serializers import CategorySerializer, ExpenseSerializer, ExpenseCreateSerializer
 
 
@@ -33,16 +34,6 @@ def category_expenses(request: Request, category_id) -> Response:
     # date_range = (datetime.fromtimestamp(int(date_from)), datetime.fromtimestamp(int(date_to)))
 
     expenses = Expense.objects.filter(category_id=int(category_id), user=request.user)
-    serialized_queryset = ExpenseSerializer(expenses, many=True)
-
-    return Response(serialized_queryset.data)
-
-
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def user_expenses(request: Request) -> Response:
-
-    expenses = Expense.objects.filter(user=request.user).order_by('-date')
     serialized_queryset = ExpenseSerializer(expenses, many=True)
 
     return Response(serialized_queryset.data)
@@ -76,3 +67,21 @@ class ExpenseListAPIView(generics.ListAPIView):
 
     queryset = Expense.objects.all()
     serializer_class = ExpenseSerializer
+    pagination_class = ExpensesAllPagination
+
+
+class ExpensesUserListAPIVIew(generics.ListAPIView):
+
+    permission_classes = [IsAuthenticated]
+
+    model = Expense
+    serializer_class = ExpenseSerializer
+    pagination_class = ExpensesUserPagination
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the purchases
+        for the currently authenticated user.
+        """
+        user = self.request.user
+        return Expense.objects.filter(user=user).order_by('-date')
