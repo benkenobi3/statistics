@@ -51,8 +51,9 @@ class CategoryListAPIView(generics.ListAPIView):
     serializer_class = CategorySerializer
 
 
-class ExpenseDetailAPIView(viewsets.ModelViewSet, generics.RetrieveUpdateDestroyAPIView):
+class ExpenseDetailViewSet(viewsets.ModelViewSet):
 
+    permission_classes = [IsAuthenticated]
     queryset = Expense.objects.all()
     serializer_class = ExpenseSerializer
 
